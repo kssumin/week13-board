@@ -5,12 +5,9 @@ apply plugin: 'jacoco'
 
 sonar {
     properties {
-        property "sonar.projectKey", "depromeet_10mm-server"
-        property "sonar.organization", "depromeet-1"
+        property "sonar.projectKey", "kssumin_week13-board"
+        property "sonar.organization", "jungle-board"
         property "sonar.host.url", "https://sonarcloud.io"
-        property 'sonar.sources', 'src'
-        property 'sonar.language', 'java'
-        property 'sonar.sourceEncoding', 'UTF-8'
         property 'sonar.test.exclusions', jacocoExcludePatterns.join(',')
         property 'sonar.test.inclusions', '**/*Test.java'
         property 'sonar.java.coveragePlugin', 'jacoco'
