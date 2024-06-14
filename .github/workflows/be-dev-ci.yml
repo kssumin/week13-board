@@ -1,0 +1,64 @@
+name: backend develop ci
+on:
+  push:
+    branches: [ "main","develop","feat/**"]
+  pull_request:
+    branches: [ "main","dvelop"]
+permissions:
+  contents: read
+  checks: write
+  pull-requests: write  
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java-version: [ 17 ]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: JDK 17 설정
+        uses: actions/checkout@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: DB를 실행
+        run: |
+          docker-compose -f resources/local-develop-environment/docker-compose.yml up -d
+          sleep 20
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+      
+      - name: Gradle 캐싱
+        uses: actions/cache@v3
+        with:
+          path: |
+              ~/.gradle/caches
+              ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+              ${{ runner.os }}-gradle-
+
+      - name: Gradle로 빌드
+        run: ./gradlew build
+
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+      - name: SonarCloud scan
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./gradlew sonar --info --stacktrace
+        
+      - name: 테스트 결과를 PR에 코멘트로 등록합니다.
+        uses: EnricoMi/publish-unit-test-result-action@v1
+        if: always()
+        with:
+          files: '**/build/test-results/test/TEST-*.xml'
