@@ -10,7 +10,7 @@ jacoco {
 def jacocoDir = layout.buildDirectory.dir("reports/")
 
 def jacocoExcludePatterns = [
-        "**/*Application*",
+        "**/*Application.class",
         "**/*Config*",
         "**/*Exception*",
         "**/*Request*",
