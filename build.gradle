@@ -49,7 +49,7 @@ ext {
 
 /** apply tasks */
 apply from: './tasks/formatting-task.gradle'
-//apply from: './tasks/code-quality-task.gradle'
+apply from: './tasks/code-quality-task.gradle'
 apply from: './tasks/docs-task.gradle'
 apply from: './tasks/install-git-hooks.gradle'
 apply from: './tasks/integration-test.gradle'

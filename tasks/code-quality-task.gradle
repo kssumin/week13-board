@@ -3,6 +3,32 @@ apply plugin: 'com.epages.restdocs-api-spec'
 apply plugin: 'org.sonarqube'
 apply plugin: 'jacoco'
 
+jacoco {
+    toolVersion = "0.8.8"
+}
+
+def jacocoDir = layout.buildDirectory.dir("reports/")
+
+def jacocoExcludePatterns = [
+        "**/*Application*",
+        "**/*Config*",
+        "**/*Exception*",
+        "**/*Request*",
+        "**/*Response*",
+        "**/*Dto*",
+        "**/*Interceptor*",
+        "**/*Filter*",
+        "**/*Resolver*",
+        "**/*Entity*",
+        "**/test/**",
+        "**/resources/**"
+]
+
+def QDomains = []
+for (qPattern in '*.QA'..'*.QZ') {
+    QDomains.add(qPattern + '*')
+}
+
 sonar {
     properties {
         property "sonar.projectKey", "kssumin_week13-board"
@@ -15,16 +41,10 @@ sonar {
     }
 }
 
-jacoco {
-    toolVersion = "0.8.8"
-}
-
 tasks.named('test') {
     useJUnitPlatform()
     finalizedBy 'jacocoTestReport'
 }
-
-def jacocoDir = layout.buildDirectory.dir("reports/")
 
 jacocoTestReport {
     dependsOn test
@@ -46,27 +66,6 @@ jacocoTestReport {
     }
     finalizedBy jacocoTestCoverageVerification
 }
-
-def QDomains = []
-for (qPattern in '*.QA'..'*.QZ') { // qPattern = '*.QA', '*.QB', ... '*.QZ'
-    QDomains.add(qPattern + '*')
-}
-
-def jacocoExcludePatterns = [
-        // 측정 안하고 싶은 패턴
-        "**/*Application*",
-        "**/*Config*",
-        "**/*Exception*",
-        "**/*Request*",
-        "**/*Response*",
-        "**/*Dto*",
-        "**/*Interceptor*",
-        "**/*Filter*",
-        "**/*Resolver*",
-        "**/*Entity*",
-        "**/test/**",
-        "**/resources/**"
-]
 
 jacocoTestCoverageVerification {
 
