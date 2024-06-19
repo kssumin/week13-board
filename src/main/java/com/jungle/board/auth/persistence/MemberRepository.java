@@ -14,7 +14,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 		return findByEmail(email).orElseThrow(NotMatchMemberException::new);
 	}
 
-
 	Optional<Member> findByEmail(String email);
 
 	boolean existsByEmail(String email);
