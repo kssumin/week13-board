@@ -22,3 +22,6 @@ logging:
     root: info
 server:
   port: 8090
+cors:
+  allow-origin:
+    urls: http://localhost:3000

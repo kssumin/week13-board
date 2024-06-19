@@ -1,7 +1,7 @@
 CREATE
     USER 'board-local'@'localhost' IDENTIFIED BY 'board-local';
 CREATE
-    USER 'boardo-local'@'%' IDENTIFIED BY 'board-local';
+    USER 'board-local'@'%' IDENTIFIED BY 'board-local';
 
 GRANT ALL PRIVILEGES ON *.* TO
     'board-local'@'localhost';

@@ -12,8 +12,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -21,7 +19,7 @@ import org.hibernate.annotations.Where;
 @ToString
 @SuperBuilder(toBuilder = true)
 @Entity
-public class Member{
+public class Member {
 	public static final String ENTITY_PREFIX = "member";
 
 	@Id
@@ -33,6 +31,6 @@ public class Member{
 	@Embedded private Password password;
 
 	public void validatePassword(String rawPassword, Encoder encoder) {
-        password.validatePassword(rawPassword, encoder);
-    }
+		password.validatePassword(rawPassword, encoder);
+	}
 }

@@ -1,7 +1,6 @@
 package com.jungle.board.auth.presentation.support;
 
 import java.util.UUID;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
