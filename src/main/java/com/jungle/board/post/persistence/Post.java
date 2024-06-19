@@ -8,14 +8,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Version;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -23,10 +22,11 @@ import org.hibernate.annotations.Where;
 @ToString
 @SuperBuilder(toBuilder = true)
 @Entity
-public class Post{
+public class Post {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
 	private String content;
 	private String color;
 	@OneToOne private Member member;
@@ -34,6 +34,7 @@ public class Post{
 	@Embedded private Coordinate coordinate;
 
 	private int likeCount = 0;
+	@Version private Long version;
 
 	public void clickLike() {
 		this.likeCount++;
