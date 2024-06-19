@@ -76,6 +76,8 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
     implementation group: 'org.mindrot', name: 'jbcrypt', version: '0.3m'
+
+    implementation("com.google.guava:guava:33.0.0-jre")
 }
 
 tasks.named('test') {
