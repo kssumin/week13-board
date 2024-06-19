@@ -20,6 +20,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 
 @SpringBootTest
 class PostLikeServiceTest {
@@ -80,8 +81,7 @@ class PostLikeServiceTest {
 						try {
 							postLikeService.like(member.getId(), request);
 							successCount.incrementAndGet();
-						} catch (Exception e) {
-							System.out.println(e.getMessage());
+						} catch (ObjectOptimisticLockingFailureException e) {
 							failCount.incrementAndGet();
 						} finally {
 							latch.countDown();
@@ -90,6 +90,9 @@ class PostLikeServiceTest {
 		}
 
 		latch.await();
+
+		System.out.println("success count : " + successCount);
+		System.out.println("fail count : " + failCount);
 
 		// then
 		int likeCount = postRepository.getById(post.getId()).getLikeCount();
