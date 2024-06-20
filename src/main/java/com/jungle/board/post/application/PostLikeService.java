@@ -24,12 +24,12 @@ public class PostLikeService {
 
 	@Transactional
 	public void like(Long memberId, CreatePostLikeRequest command) {
-		Post post = postRepository.getById(command.postId());
+		Post post = postRepository.findByIdWithLock(command.postId());
 		Member member = memberRepository.getById(memberId);
 		PostLike postLike = toPostLike(post, member);
 
-		postLike.like(postLikeValidator);
-		postLikeRepository.save(postLike);
+		postLike.like(postLikeValidator); // post에 대한 x-lock
+		postLikeRepository.save(postLike); // post에 대한 s-lock
 	}
 
 	@Transactional
