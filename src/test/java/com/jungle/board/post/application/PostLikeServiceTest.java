@@ -52,7 +52,7 @@ class PostLikeServiceTest {
 	}
 
 	@Test
-	@DisplayName("좋아요 단일 요청")
+	@DisplayName("딘일 스레드 환경에서 좋아요 요청 테스트")
 	void single_thread_like() {
 		// when
 		for (Member member : members) {
@@ -65,7 +65,7 @@ class PostLikeServiceTest {
 	}
 
 	@Test
-	@DisplayName("멀티 스레드 환경에서 다중 스레드 테스트")
+	@DisplayName("멀티 스레드 환경에서 좋아요 요청 테스트")
 	void multi_thread_like() throws InterruptedException {
 		// given
 		ExecutorService executorService = Executors.newFixedThreadPool(30);
