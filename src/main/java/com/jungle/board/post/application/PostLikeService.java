@@ -30,7 +30,7 @@ public class PostLikeService {
 			retryFor = {ObjectOptimisticLockingFailureException.class},
 			maxAttempts = 1000,
 			backoff = @Backoff(100))
-	public void like(Long memberId, CreatePostLikeRequest command) {
+	public synchronized void like(Long memberId, CreatePostLikeRequest command) {
 		Post post = postRepository.getById(command.postId());
 		Member member = memberRepository.getById(memberId);
 		PostLike postLike = toPostLike(post, member);

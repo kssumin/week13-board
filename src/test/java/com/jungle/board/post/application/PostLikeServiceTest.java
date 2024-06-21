@@ -65,7 +65,7 @@ class PostLikeServiceTest {
 	}
 
 	@Test
-	@DisplayName("좋아요 다중 요청")
+	@DisplayName("멀티 스레드 환경에서 다중 스레드 테스트")
 	void multi_thread_like() throws InterruptedException {
 		// given
 		ExecutorService executorService = Executors.newFixedThreadPool(30);
